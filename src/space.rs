@@ -3,6 +3,7 @@ use std::rc::Rc;
 use std::cell::UnsafeCell;
 use std::mem;
 use std::marker::PhantomData;
+use std::slice::Iter;
 
 use chip;
 use void::Void;
@@ -76,6 +77,18 @@ impl <T> Space<T> {
     pub fn remove_shape<A>(&mut self, shape: Shape<A>){
         unsafe {
             (*self.raw.get()).remove_shape(shape);
+        }
+    }
+
+    pub fn bodies(&self) -> Iter<Body> {
+        unsafe {
+            (*self.raw.get()).bodies.iter()
+        }
+    }
+
+    pub fn shapes(&self) -> Iter<Shape> {
+        unsafe {
+            (*self.raw.get()).shapes.iter()
         }
     }
 
